@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <img src="HKMU ICON.png" width="85" height="90">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar{
+            background-color: #007bff;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar li{
+            display: inline-block;
+        }
+
+        .navbar a {
+            display: block;
+            padding: 14px 16px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar a:hover:not(.active){
+            background-color: rgb(0, 17, 255);
+        }
+        .container {
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <ul class="navbar">
+        <li><a href="HomePage.html">HomePage</a></li>
+        <li><a href="STUDENT_LIST.html">Student_List</a></li>
+        <li><a href="ADD_STUDENT.html">Add_Student</a></li>
+        <li><a href="EXAM_RESULT.html">Update_Exam_Result</a></li>
+        <li><a href="logout.html">LogOut</a></li>
+    </ul>
+    <h1>Add Student</h1>
+    <form id="stu_input">
+        Student Name: <input type="text" id="name" value="">
+        <br>
+        Student ID: s<input type="text" id="id" value="">
+        <br>
+        <input type="button" value="submit" onclick="addstudent()"> 
+    </form>
+
+    <script>
+
+        function addstudent(){
+        var stuname = document.getElementById('name');
+        var stuID = document.getElementById('id');
+
+        if (!stuname.value || !stuID.value){
+            window.alert('Please enter the information of student');
+            return
+        }   
+
+        var sNAME = JSON.parse(localStorage.getItem('studentName')) || [];
+
+        var sID = JSON.parse(localStorage.getItem('studentID')) || [];
+
+       if (sID.indexOf('s' + stuID.value) === -1){
+            sNAME.push(stuname.value);
+            sID.push('s' + stuID.value);       
+            localStorage.setItem('studentName', JSON.stringify(sNAME));
+            localStorage.setItem('studentID', JSON.stringify(sID));
+        
+           var student = {
+               Name : stuname.value,
+               id : 's' + stuID.value,
+               CHIN : '---',
+               ENG : '---',
+               MATHS : '---'
+           };
+
+           localStorage.setItem('s' + stuID.value, JSON.stringify(student));
+
+           stuname.value = '';
+           stuID.value = '';
+           window.alert("Add student sucessful");          
+        }   
+        else {
+            window.alert('This student id already exist. Try another one');
+            stuID.value = '';
+        }
+    
+        }
+
+    </script>
+</body>
+</html>

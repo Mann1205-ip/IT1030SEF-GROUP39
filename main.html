@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <style>
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .login-container input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-container button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Student Management System</h2>
+        <input type="text" id="account" placeholder="Enter Student/Teacher ID">
+        <button onclick="login()">Login</button>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        function login() {
+            const account = document.getElementById('account').value.trim();
+            const message = document.getElementById('message');
+
+            if (!account) {
+                message.textContent = 'Please enter your account ID.';
+                return;
+            }
+
+            if (account.startsWith('s')) {
+                // Redirect to student system
+                window.location.href = 'StudentPage.html';
+            } else if (account.startsWith('t')) {
+                // Redirect to teacher system
+                window.location.href = 'HomePage.html';
+            } else {
+                message.textContent = 'Invalid account ID. Please enter a valid student or teacher ID.';
+            }
+        }
+    </script>
+</body>
+</html>

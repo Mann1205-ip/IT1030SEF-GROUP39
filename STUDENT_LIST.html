@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <img src="HKMU ICON.png" width="85" height="90">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar{
+            background-color: #007bff;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar li{
+            display: inline-block;
+        }
+
+        .navbar a {
+            display: block;
+            padding: 14px 16px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar a:hover:not(.active){
+            background-color: rgb(0, 17, 255);
+        }
+        .container {
+            margin-top: 20px;
+        }
+
+
+        .student_card {
+            margin-top: 10px;
+            padding: 20px;
+            border: 2px solid #007bff;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <ul class="navbar">
+        <li><a href="HomePage.html">HomePage</a></li>
+        <li><a href="STUDENT_LIST.html">Student_List</a></li>
+        <li><a href="ADD_STUDENT.html">Add_Student</a></li>
+        <li><a href="EXAM_RESULT.html">Update_Exam_Result</a></li>
+        <li><a href="logout.html">LogOut</a></li>
+    </ul>
+    <h1>Student List</h1>
+    
+    Delete Student Card <br>
+    student ID : <input type="text" id="delID" value="">
+    <input type="button" value="DELETE" onclick="del()">
+    <div class="container" id="studentlist"></div>
+
+    <script>
+
+    function goToStudentPage(sid){
+        localStorage.setItem('targetID', sid);
+        window.open('StudentPage.html');
+    }
+
+    function del(){
+        var stuName = JSON.parse(localStorage.getItem('studentName'));
+        var stuID = JSON.parse(localStorage.getItem('studentID'));
+        var id = document.getElementById('delID').value;
+
+        var i = stuID.indexOf(id);
+        stuID.splice(i, 1);
+        stuName.splice(i, 1);
+
+        localStorage.setItem('studentName', JSON.stringify(stuName));
+        localStorage.setItem('studentID', JSON.stringify(stuID));
+
+        document.getElementById(id).remove();
+        document.getElementById('delID').value = '';
+    }
+
+    function load(){
+        var container = document.getElementById('studentlist');
+        var DIV = document.createElement('div');
+
+        var stuName = JSON.parse(localStorage.getItem('studentName'));
+        var stuID = JSON.parse(localStorage.getItem('studentID'));
+
+        for (i=0;i<stuID.length;i++){
+         const DIV = document.createElement('div');
+          DIV.className = 'student_card';
+          DIV.id = stuID[i];
+          DIV.innerHTML = `
+            <p>Student Name: ${stuName[i]}</p>
+            <p>Student ID: ${stuID[i]}</p>
+            <input type='button' value='Go to student page' onclick="goToStudentPage('${stuID[i]}')">`;
+          container.appendChild(DIV);            
+        }
+    }
+
+    window.onload = load();
+    </script>
+</body>
+</html>

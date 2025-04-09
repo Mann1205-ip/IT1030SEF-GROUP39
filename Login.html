@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Student Management System</h2>
+        <input type="text" id="account" placeholder="Enter Student/Teacher ID">
+        <button onclick="checkLogin()">Login</button>
+        <div class="message" id="message"></div>
+        <div id="passwordContainer" style="display:none;">
+            <input type="password" id="password" placeholder="Enter Password">
+            <button onclick="validatePassword()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        let userType = new URLSearchParams(window.location.search).get('type') || '';
+
+        function checkLogin() {
+            const account = document.getElementById('account').value.trim();
+            const message = document.getElementById('message');
+
+            if (!account) {
+                message.textContent = 'Please enter your account ID.';
+                return;
+            }
+
+            if (!userType) {
+                if (account.startsWith('s')) userType = 'student';
+                else if (account.startsWith('t')) userType = 'teacher';
+            }
+
+            if (!localStorage.getItem(userType + 'PasswordSet')) {
+                window.location.href = 'SetPassword.html';
+            } else {
+                document.getElementById('passwordContainer').style.display = 'block';
+                document.getElementById('password').focus();
+            }
+        }
+
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const correctPassword = localStorage.getItem(userType + 'Password');
+
+            if (password === correctPassword) {
+                window.location.href = userType === 'student' ? 'StudentPage.html' : 'HomePage.html';
+            } else {
+                document.getElementById('message').textContent = 'Incorrect password.';
+                console.log('Input password:', password, 'Correct password:', correctPassword);
+            }
+        }
+    </script>
+</body>
+</html>

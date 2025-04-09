@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <img src="HKMU ICON.png" width="85" height="90">
+    <body>
+        <h1>Student Page</h1>
+        <div id="sName"></div>
+        <div id="sID"></div>
+        <div id="exam">
+           <h1>Exam result:</h1> 
+           <div id="chin"></div><br>
+           <div id="eng"></div><br>
+           <div id="maths"></div><br>
+        </div>
+        
+
+        <script>
+            function loadDetail(){
+               var id = localStorage.getItem('targetID');
+               var studentINFO = JSON.parse(localStorage.getItem(id));
+
+               var name = document.getElementById('sName');
+               name.textContent = 'NAME: ' + studentINFO.Name;
+
+               var id = document.getElementById('sID');
+               id.textContent = 'Student ID: ' + studentINFO.id;
+
+               var chin = document.getElementById('chin');
+               chin.textContent = 'CHIN: ' + studentINFO.CHIN;
+
+               var eng = document.getElementById('eng');
+               eng.textContent = 'ENG: ' + studentINFO.ENG;
+
+               var maths = document.getElementById('maths');
+               maths.textContent = 'MATHS: ' + studentINFO.MATHS;
+
+            }
+
+            window.onload = loadDetail;
+        </script>
+    </body>
+</html>
